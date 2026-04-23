@@ -5,12 +5,8 @@
 {% block content %}
 <article class="card">
   <div class="badge-row">
-    <span class="badge {{ task.status }}">
-      {{ task.get_status_display }}
-    </span>
-    <span class="badge {{ task.priority }}">
-      {{ task.get_priority_display }}
-    </span>
+    <span class="badge {{ task.status }}">{{ task.get_status_display }}</span>
+    <span class="badge {{ task.priority }}">{{ task.get_priority_display }}</span>
     {% if task.is_overdue %}
     <span class="badge high">Просрочена</span>
     {% endif %}

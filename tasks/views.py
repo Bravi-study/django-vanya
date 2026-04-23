@@ -61,8 +61,8 @@ class SignUpView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
+        self.object = form.save()
+        login(self.request, self.object)
         messages.success(self.request, "Пользователь создан. Теперь можно работать с задачами.")
         return redirect(self.get_success_url())
 

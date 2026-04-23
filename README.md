@@ -27,9 +27,9 @@
 
 ```bash
 uv sync
-.venv/bin/python manage.py migrate
-.venv/bin/python manage.py createsuperuser
-.venv/bin/python manage.py runserver
+uv run manage.py migrate
+uv run manage.py createsuperuser
+uv run manage.py runserver
 ```
 
 После этого приложение будет доступно на `http://127.0.0.1:8000/`.
@@ -37,9 +37,9 @@ uv sync
 ## Полезные команды
 
 ```bash
-.venv/bin/python manage.py test tasks
-.venv/bin/python manage.py check
-.venv/bin/python manage.py shell
+uv run run manage.py test
+uv run manage.py check
+uv run manage.py shell
 ```
 
 ## Запуск через Docker

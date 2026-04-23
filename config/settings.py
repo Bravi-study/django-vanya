@@ -108,3 +108,5 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.BasicAuthentication",
     ],
 }
+
+TEST_RUNNER = "config.test_runner.DefaultAppDiscoverRunner"
