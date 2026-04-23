@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Главная | Django Interview Demo{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="card hero-copy">
+    <span class="eyebrow">Учебный проект для собеседования</span>
+    <h1>Классический Django без лишнего шума</h1>
+    <p>
+      Здесь собраны ключевые темы, которые часто обсуждают на интервью: ORM,
+      формы,
+      class-based views, аутентификация, админка, тесты, Docker и небольшой
+      JSON API.
+    </p>
+    <div class="action-row">
+      <a class="button" href="{% url 'tasks:list' %}">Открыть задачи</a>
+      {% if not user.is_authenticated %}
+      <a class="button secondary" href="{% url 'tasks:signup' %}">Создать
+        пользователя</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <aside class="card hero-aside">
+    <div class="kicker">Что смотреть в коде</div>
+    <h2>Архитектура проекта</h2>
+    <p>Один app c достаточной глубиной, чтобы обсудить связи моделей, доступы и
+      жизненный цикл данных.</p>
+    <div class="badge-row">
+      <span class="badge">ORM и QuerySet</span>
+      <span class="badge">ModelForm</span>
+      <span class="badge">Admin</span>
+      <span class="badge">DRF</span>
+      <span class="badge">SQLite</span>
+      <span class="badge">Docker</span>
+    </div>
+  </aside>
+</section>
+
+{% if dashboard %}
+<section class="stats-grid" style="margin-top: 1rem;">
+  <article class="card">
+    <div class="kicker">Всего видно пользователю</div>
+    <h2>{{ dashboard.total }}</h2>
+  </article>
+  <article class="card">
+    <div class="kicker">В работе</div>
+    <h2>{{ dashboard.in_progress }}</h2>
+  </article>
+  <article class="card">
+    <div class="kicker">Готово</div>
+    <h2>{{ dashboard.done }}</h2>
+  </article>
+</section>
+{% endif %}
+
+<section class="feature-grid" style="margin-top: 1rem;">
+  <article class="card">
+    <div class="kicker">ORM</div>
+    <h3>Связи и оптимизация</h3>
+    <p>Модели показывают FK, M2M, индексы и методы QuerySet для ограничения
+      доступа и уменьшения числа запросов.</p>
+  </article>
+  <article class="card">
+    <div class="kicker">Views</div>
+    <h3>Class-based подход</h3>
+    <p>CRUD-сценарии реализованы через generic views, чтобы наглядно показать,
+      где переопределять стандартное поведение.</p>
+  </article>
+  <article class="card">
+    <div class="kicker">API</div>
+    <h3>Небольшой DRF слой</h3>
+    <p>API использует ту же доменную модель, поэтому можно обсудить
+      сериализацию и объектные права доступа.</p>
+  </article>
+</section>
+
+<section class="card" style="margin-top: 1rem;">
+  <div class="kicker">Теги</div>
+  <h2>Популярные теги</h2>
+  {% if top_tags %}
+  <div class="badge-row">
+    {% for tag in top_tags %}
+    <span class="badge">{{ tag.tags__name }} · {{ tag.total }}</span>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>После создания задач здесь появится простая аналитика по тегам.</p>
+  {% endif %}
+</section>
+{% endblock %}

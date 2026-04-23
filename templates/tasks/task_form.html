@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Редактирование{% else %}Новая задача{% endif %}
+| Django Interview Demo{% endblock %}
+
+{% block content %}
+<section class="card" style="max-width: 760px; margin: 0 auto;">
+  <div class="kicker">ModelForm и валидация</div>
+  <h1>{% if object %}Редактирование задачи{% else %}Создание задачи{% endif %}
+  </h1>
+  <p>Здесь полезно обсуждать, чем серверная валидация в Django отличается от
+    клиентской и почему она обязательна.</p>
+  <form method="post">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" with form=form %}
+    <div class="action-row">
+      <button type="submit">Сохранить</button>
+      {% if object %}
+      <a class="button secondary"
+        href="{{ object.get_absolute_url }}">Отмена</a>
+      {% else %}
+      <a class="button secondary" href="{% url 'tasks:list' %}">Отмена</a>
+      {% endif %}
+    </div>
+  </form>
+</section>
+{% endblock %}

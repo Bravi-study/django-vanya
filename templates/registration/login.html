@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Вход | Django Interview Demo{% endblock %}
+
+{% block content %}
+<section class="card" style="max-width: 620px; margin: 0 auto;">
+  <div class="kicker">Встроенная auth-система</div>
+  <h1>Вход</h1>
+  <p>Django уже даёт готовую форму и view для входа. Наша задача здесь в
+    основном про шаблон и маршрутизацию.</p>
+  <form method="post">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" with form=form %}
+    <div class="action-row">
+      <button type="submit">Войти</button>
+      <a class="button secondary"
+        href="{% url 'tasks:signup' %}">Регистрация</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

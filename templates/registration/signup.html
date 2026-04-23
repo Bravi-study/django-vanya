@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация | Django Interview Demo{% endblock %}
+
+{% block content %}
+<section class="card" style="max-width: 680px; margin: 0 auto;">
+  <div class="kicker">Расширение стандартных форм</div>
+  <h1>Регистрация</h1>
+  <p>Форма наследуется от UserCreationForm и добавляет только те поля, которые
+    нужны для учебного сценария.</p>
+  <form method="post">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" with form=form %}
+    <div class="action-row">
+      <button type="submit">Создать аккаунт</button>
+      <a class="button secondary" href="{% url 'login' %}">Уже есть аккаунт</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Выход | Django Interview Demo{% endblock %}
+
+{% block content %}
+<section class="card"
+  style="max-width: 620px; margin: 0 auto; text-align: center;">
+  <div class="kicker">Сессии</div>
+  <h1>Вы вышли из системы</h1>
+  <p>Для повторного входа используйте стандартный маршрут Django auth.</p>
+  <div class="action-row" style="justify-content: center;">
+    <a class="button" href="{% url 'login' %}">Войти снова</a>
+    <a class="button secondary" href="{% url 'tasks:home' %}">На главную</a>
+  </div>
+</section>
+{% endblock %}

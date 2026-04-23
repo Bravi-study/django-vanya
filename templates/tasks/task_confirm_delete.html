@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление | Django Interview Demo{% endblock %}
+
+{% block content %}
+<section class="card" style="max-width: 720px; margin: 0 auto;">
+  <div class="kicker">DeleteView</div>
+  <h1>Удалить задачу?</h1>
+  <p>Это действие необратимо. На интервью здесь удобно обсудить, почему
+    удаление лучше делать через POST, а не через GET.</p>
+  <div class="code-block">{{ object.title }}</div>
+  <form method="post" style="margin-top: 1rem;">
+    {% csrf_token %}
+    <div class="action-row">
+      <button type="submit">Да, удалить</button>
+      <a class="button secondary"
+        href="{{ object.get_absolute_url }}">Отмена</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

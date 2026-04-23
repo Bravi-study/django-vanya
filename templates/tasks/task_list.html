@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Задачи | Django Interview Demo{% endblock %}
+
+{% block content %}
+<section class="stats-grid">
+  <article class="card">
+    <div class="kicker">Найдено задач</div>
+    <h2>{{ summary.total }}</h2>
+  </article>
+  <article class="card">
+    <div class="kicker">Готово</div>
+    <h2>{{ summary.done }}</h2>
+  </article>
+  <article class="card">
+    <div class="kicker">Просрочено</div>
+    <h2>{{ summary.overdue }}</h2>
+  </article>
+</section>
+
+<section class="two-col" style="margin-top: 1rem;">
+  <aside class="card">
+    <div class="kicker">Фильтры</div>
+    <h2>Подготовка к list view</h2>
+    <p>Эта форма отправляется методом GET, поэтому фильтры удобно делиться
+      ссылкой и легко тестировать.</p>
+    <form method="get">
+      {% include "includes/form_fields.html" with form=filter_form %}
+      <div class="action-row">
+        <button type="submit">Применить</button>
+        <a class="button secondary" href="{% url 'tasks:list' %}">Сбросить</a>
+      </div>
+    </form>
+  </aside>
+
+  <div class="layout-grid">
+    <div class="action-row">
+      <a class="button" href="{% url 'tasks:create' %}">Создать задачу</a>
+    </div>
+
+    {% if tasks %}
+    <div class="task-grid">
+      {% for task in tasks %}
+      <article class="card task-card">
+        <div class="badge-row">
+          <span class="badge {{ task.status }}">
+            {{ task.get_status_display }}
+          </span>
+          <span class="badge {{ task.priority }}">
+            {{ task.get_priority_display }}
+          </span>
+          {% if task.is_archived %}
+          <span class="badge">Архив</span>
+          {% endif %}
+          {% if task.is_overdue %}
+          <span class="badge high">Просрочена</span>
+          {% endif %}
+        </div>
+        <h3><a href="{{ task.get_absolute_url }}">{{ task.title }}</a></h3>
+        <p>{{ task.description|default:"Без описания"|truncatechars:150 }}</p>
+        <div class="meta-row muted">
+          <span>Владелец: {{ task.owner.username }}</span>
+          <span>
+            Исполнитель: {{ task.assignee|default:"не назначен" }}
+          </span>
+          <span>
+            Срок: {{ task.due_date|date:"d.m.Y"|default:"не указан" }}
+          </span>
+        </div>
+        {% if task.tags.all %}
+        <div class="badge-row" style="margin-top: 0.8rem;">
+          {% for tag in task.tags.all %}
+          <span class="badge">#{{ tag.name }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <article class="card empty-state">
+      <h2>Пока нет задач</h2>
+      <p>Начните с одной записи и посмотрите, как работают формы, миграции,
+        админка и API.</p>
+      <a class="button" href="{% url 'tasks:create' %}">Добавить первую
+        задачу</a>
+    </article>
+    {% endif %}
+  </div>
+</section>
+
+{% if is_paginated %}
+<nav class="pagination">
+  {% if page_obj.has_previous %}
+  <a class="button secondary"
+    href="?page={{ page_obj.previous_page_number }}">Назад</a>
+  {% endif %}
+  <span class="badge">Страница {{ page_obj.number }} из {{
+    page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}
+  <a class="button secondary"
+    href="?page={{ page_obj.next_page_number }}">Вперёд</a>
+  {% endif %}
+</nav>
+{% endif %}
+{% endblock %}
